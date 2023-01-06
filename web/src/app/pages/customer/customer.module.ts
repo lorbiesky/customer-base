@@ -6,6 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { CustomerComponent } from './customer.component';
 import { CustomerRoutingModule } from './customer.routing.module';
@@ -17,6 +19,8 @@ const MaterialModules = [
   MatButtonModule,
   MatIconModule,
   MatCardModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({

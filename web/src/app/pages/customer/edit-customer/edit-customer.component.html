@@ -1,1 +1,26 @@
-<p>edit-customer works!</p>
+<mat-card>
+  <mat-card-content>
+    <form action="">
+      <div>
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="Ex: João Victor Dias"
+            formControlName="name"
+          />
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-footer>
+    <button
+      style="margin-bottom: 16px"
+      mat-raised-button
+      color="primary"
+    >
+      Salvar
+    </button>
+  </mat-card-footer>
+</mat-card>
