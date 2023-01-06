@@ -8,21 +8,21 @@ import { Customer } from '../models/customer';
 export class CustomerService {
   private customers: Customer[] = [
     {
-      _id: 'asdqxcxzcaq',
+      id: 0,
       name: 'João',
       email: 'joao@gmail.com',
       cpf: '17987450990',
       birthday: new Date('04/07/1997'),
     },
     {
-      _id: 'asdqxcxzcaq',
+      id: 1,
       name: 'João',
       email: 'joao@gmail.com',
       cpf: '17987450990',
       birthday: new Date('04/07/1997'),
     },
     {
-      _id: 'asdqxcxzcaq',
+      id: 2,
       name: 'João',
       email: 'joao@gmail.com',
       cpf: '17987450990',
