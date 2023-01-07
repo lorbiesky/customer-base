@@ -2,6 +2,6 @@ export interface Customer {
   id: number;
   name: string;
   email: string;
-  cpf: string;
+  document: string;
   birthday: Date;
 }

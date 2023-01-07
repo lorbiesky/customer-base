@@ -1,26 +1,27 @@
 <mat-card>
-  <mat-card-content>
-    <form action="">
-      <div>
-        <mat-form-field>
-          <mat-label>Nome</mat-label>
-          <input
-            matInput
-            placeholder="Ex: João Victor Dias"
-            formControlName="name"
-          />
-        </mat-form-field>
-      </div>
-    </form>
-  </mat-card-content>
+  <mat-card-title>
+    <h1>Novo Cliente</h1>
+  </mat-card-title>
 
-  <mat-card-footer>
-    <button
-      style="margin-bottom: 16px"
-      mat-raised-button
-      color="primary"
-    >
-      Salvar
-    </button>
-  </mat-card-footer>
+  <form>
+    <mat-form-field>
+      <input matInput placeholder="Nome" [(ngModel)]="customer.name" name="name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Cpf" [(ngModel)]="customer.email" name="e-mail">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Cpf" [(ngModel)]="customer.document" name="cpf">
+    </mat-form-field>
+  </form>
 </mat-card>
+
+<button mat-raised-button color="primary">
+  Salvar
+</button>
+
+<button mat-raised-button>
+  Cancelar
+</button>
