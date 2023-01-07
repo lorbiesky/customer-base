@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/models/customer';
-import { CustomerService } from 'src/app/services/customer.service';
+import { Customer } from 'src/app/core/models/Customer';
+import { CustomerService } from 'src/app/core/services/customer.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-customer',
   templateUrl: './list-customer.component.html',
-  styleUrls: ['./list-customer.component.sass'],
+  styleUrls: ['./list-customer.component.scss'],
 })
-
 export class ListCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomerService,

@@ -1,7 +1,8 @@
 export interface Customer {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   document: string;
   birthday: Date;
+  ownHome: boolean;
 }

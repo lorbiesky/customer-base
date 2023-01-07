@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Customer } from '../models/customer';
+import { Customer } from '../models/Customer';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class CustomerService {
   private customers: Customer[] = [
     {
@@ -13,6 +12,7 @@ export class CustomerService {
       email: 'joao@gmail.com',
       document: '17987450990',
       birthday: new Date('04/07/1997'),
+      ownHome: false,
     },
     {
       id: 1,
@@ -20,6 +20,7 @@ export class CustomerService {
       email: 'joao@gmail.com',
       document: '17987450990',
       birthday: new Date('04/07/1997'),
+      ownHome: false,
     },
     {
       id: 2,
@@ -27,11 +28,12 @@ export class CustomerService {
       email: 'joao@gmail.com',
       document: '17987450990',
       birthday: new Date('04/07/1997'),
+      ownHome: false,
     },
   ];
   constructor() {}
 
   getCustomers() {
-    return this.customers
+    return this.customers;
   }
 }

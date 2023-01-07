@@ -1,27 +1,68 @@
 <mat-card>
   <mat-card-title>
-    <h1>Novo Cliente</h1>
+    <h1>{{ title }}</h1>
   </mat-card-title>
 
   <form>
-    <mat-form-field>
-      <input matInput placeholder="Nome" [(ngModel)]="customer.name" name="name">
-    </mat-form-field>
+    <div class="input-container">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Nome"
+          [(ngModel)]="customer.name"
+          name="name"
+          required
+        />
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Cpf" [(ngModel)]="customer.email" name="e-mail">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="exemplo@gmail.com"
+          [(ngModel)]="customer.email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+    </div>
 
-    <mat-form-field>
-      <input matInput placeholder="Cpf" [(ngModel)]="customer.document" name="cpf">
-    </mat-form-field>
+    <div class="input-container">
+      <mat-form-field>
+        <mat-label>CPF</mat-label>
+        <input
+          matInput
+          placeholder="000.000.000-00"
+          [(ngModel)]="customer.document"
+          name="document"
+          mask="000.000.000-00"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="date-picker">
+        <mat-label>Data de nascimento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dp"
+          placeholder="DD/MM/YYYY"
+          mask="00/00/0000"
+          name="birthday"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+      </mat-form-field>
+    </div>
   </form>
+
+  <mat-card-footer>
+    <button mat-raised-button color="warn" (click)="handleCancel()">
+      Cancelar
+    </button>
+
+    <button mat-raised-button color="primary" (click)="handleConfirm()">
+      Salvar
+    </button>
+  </mat-card-footer>
 </mat-card>
-
-<button mat-raised-button color="primary">
-  Salvar
-</button>
-
-<button mat-raised-button>
-  Cancelar
-</button>
