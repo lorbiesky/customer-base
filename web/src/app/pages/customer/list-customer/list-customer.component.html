@@ -49,7 +49,12 @@
         </button>
 
         <!-- Delete Button -->
-        <button style="margin-right: 5px" mat-mini-fab color="warn">
+        <button
+          style="margin-right: 5px"
+          mat-mini-fab
+          color="warn"
+          (click)="handleRemove(customer.id)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>

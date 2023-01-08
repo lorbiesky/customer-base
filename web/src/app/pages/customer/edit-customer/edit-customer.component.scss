@@ -3,7 +3,7 @@ form {
   flex-direction: column;
 }
 
-mat-card-footer {
+.buttons-container {
   display: flex;
   gap: 10px;
   flex-direction: row;
@@ -26,10 +26,13 @@ mat-form-field {
 
   @media (min-width: 800px) {
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     gap: 16px;
   }
 }
 
-.date-picker {
+.date-picker,
+.states {
   max-width: 200px;
 }

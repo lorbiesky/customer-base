@@ -30,6 +30,6 @@ export class ListCustomerComponent implements OnInit {
   }
 
   handleRemove(id: number) {
-    this.router.navigate([`/customer/${id}`]);
+    this.customerService.removeCustomer(id);
   }
 }

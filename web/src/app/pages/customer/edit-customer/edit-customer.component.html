@@ -3,25 +3,19 @@
     <h1>{{ title }}</h1>
   </mat-card-title>
 
-  <form>
+  <form [formGroup]="form">
     <div class="input-container">
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Nome"
-          [(ngModel)]="customer.name"
-          name="name"
-          required
-        />
+        <input matInput placeholder="Nome" formControlName="name" required />
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input
           matInput
+          type="email"
           placeholder="exemplo@gmail.com"
-          [(ngModel)]="customer.email"
-          name="email"
+          formControlName="email"
           required
         />
       </mat-form-field>
@@ -33,8 +27,7 @@
         <input
           matInput
           placeholder="000.000.000-00"
-          [(ngModel)]="customer.document"
-          name="document"
+          formControlName="document"
           mask="000.000.000-00"
           required
         />
@@ -44,25 +37,51 @@
         <mat-label>Data de nascimento</mat-label>
         <input
           matInput
-          [matDatepicker]="dp"
+          [matDatepicker]="picker"
           placeholder="DD/MM/YYYY"
-          mask="00/00/0000"
-          name="birthday"
+          formControlName="birthday"
           required
         />
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
+    <div class="input-container">
+      <mat-form-field>
+        <input matInput placeholder="Endereço" formControlName="address" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Cidade" formControlName="city" />
+      </mat-form-field>
+
+      <mat-form-field class="states">
+        <mat-label>UF</mat-label>
+        <mat-select formControlName="stateUf">
+          <mat-option *ngFor="let state of states" [value]="state.sigla">
+            {{ state.sigla }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="input-container">
+      <mat-checkbox>Casa própria</mat-checkbox>
+    </div>
+    <div class="buttons-container">
+      <button mat-raised-button color="warn" (click)="handleCancel()">
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.valid"
+        (click)="handleConfirm()"
+      >
+        Salvar
+      </button>
+    </div>
   </form>
-
-  <mat-card-footer>
-    <button mat-raised-button color="warn" (click)="handleCancel()">
-      Cancelar
-    </button>
-
-    <button mat-raised-button color="primary" (click)="handleConfirm()">
-      Salvar
-    </button>
-  </mat-card-footer>
 </mat-card>
