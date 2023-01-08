@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CustomerSistem.Migrations
 {
     [DbContext(typeof(CustomerSistemDBContex))]
-    [Migration("20230105110941_InitialDB")]
-    partial class InitialDB
+    [Migration("20230108175608_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,14 @@ namespace CustomerSistem.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Birthday")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
 
                     b.Property<string>("Document")
                         .IsRequired()
@@ -49,6 +55,12 @@ namespace CustomerSistem.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<bool?>("OwnHome")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("StateUf")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

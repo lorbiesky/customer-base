@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CustomerSistem.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,11 @@ namespace CustomerSistem.Migrations
                     Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Document = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
-                    Birthday = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Birthday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: true),
+                    City = table.Column<string>(type: "text", nullable: true),
+                    StateUf = table.Column<string>(type: "text", nullable: true),
+                    OwnHome = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {

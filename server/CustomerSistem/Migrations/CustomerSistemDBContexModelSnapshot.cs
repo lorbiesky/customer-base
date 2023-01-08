@@ -34,7 +34,7 @@ namespace CustomerSistem.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Birthday")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("City")
                         .HasColumnType("text");
