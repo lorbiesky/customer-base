@@ -18,6 +18,13 @@ namespace CustomerSistem
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build =>
+            {
+                build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            }));
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             builder.Services.AddEntityFrameworkNpgsql()
                 .AddDbContext<CustomerSistemDBContex>(
                     options => options.UseNpgsql(builder.Configuration.GetConnectionString("DataBase"))
@@ -33,6 +40,8 @@ namespace CustomerSistem
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("corsPolicy");
 
             app.UseHttpsRedirection();
 

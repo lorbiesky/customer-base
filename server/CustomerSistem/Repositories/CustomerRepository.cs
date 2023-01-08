@@ -8,7 +8,7 @@ namespace CustomerSistem.Repositories
     public class CustomerRepository : ICustomerRepository
     {
         private readonly CustomerSistemDBContex _dbContext;
-        public CustomerRepository(CustomerSistemDBContex customerSistemDBContex) 
+        public CustomerRepository(CustomerSistemDBContex customerSistemDBContex)
         {
             _dbContext = customerSistemDBContex;
         }
@@ -25,7 +25,7 @@ namespace CustomerSistem.Repositories
         public async Task<CustomerModel> Add(CustomerModel customer)
         {
             await _dbContext.Customers.AddAsync(customer);
-            await _dbContext.SaveChangesAsync ();
+            await _dbContext.SaveChangesAsync();
 
             return customer;
         }
@@ -33,7 +33,7 @@ namespace CustomerSistem.Repositories
         {
             CustomerModel customerDb = await SearchById(id);
 
-            if (customerDb == null) 
+            if (customerDb == null)
             {
                 throw new Exception($"Customer for ID: {id} not found.");
             }
@@ -42,8 +42,12 @@ namespace CustomerSistem.Repositories
             customerDb.Email = customer.Email;
             customerDb.Document = customer.Document;
             customerDb.Birthday = customer.Birthday;
+            customerDb.Address = customer.Address;
+            customerDb.City = customer.City;
+            customerDb.StateUf = customer.StateUf;
+            customerDb.OwnHome = customer.OwnHome;
 
-            _dbContext.Customers.Update(customer);
+            _dbContext.Customers.Update(customerDb);
             await _dbContext.SaveChangesAsync();
 
             return customerDb;

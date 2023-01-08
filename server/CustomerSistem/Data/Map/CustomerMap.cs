@@ -13,6 +13,10 @@ namespace CustomerSistem.Data.Map
             builder.Property(e => e.Email).IsRequired().HasMaxLength(150);
             builder.Property(e => e.Document).IsRequired().HasMaxLength(11);
             builder.Property(e => e.Birthday).IsRequired();
+            builder.Property(e => e.Address);
+            builder.Property(e => e.City);
+            builder.Property(e => e.StateUf);
+            builder.Property(e => e.OwnHome);
         }
     }
 }

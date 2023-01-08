@@ -4,8 +4,8 @@ export class Customer {
   email: string;
   document: string;
   birthday: string;
-  address: string;
-  city: string;
-  stateUf: string;
+  address?: string;
+  city?: string;
+  stateUf?: string;
   ownHome: boolean;
 }

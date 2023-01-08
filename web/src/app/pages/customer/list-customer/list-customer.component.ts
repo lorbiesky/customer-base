@@ -12,13 +12,19 @@ export class ListCustomerComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private router: Router
-  ) {}
+  ) {
+    this.getCustomers();
+  }
 
   customers: Customer[] = [];
   columnsToDisplay = ['id', 'name', 'email', 'cpf', 'actions'];
 
-  ngOnInit() {
-    this.customers = this.customerService.getCustomers();
+  ngOnInit() {}
+
+  getCustomers(): void {
+    this.customerService
+      .getAll()
+      .subscribe((customer) => (this.customers = customer));
   }
 
   handleAdd() {
@@ -30,6 +36,15 @@ export class ListCustomerComponent implements OnInit {
   }
 
   handleRemove(id: number) {
-    this.customerService.removeCustomer(id);
+    if (window.confirm('Deseja realmente deletar esse usuário?')) {
+      this.customerService.remove(id).subscribe((deleted) => {
+        if (deleted) {
+          window.alert('Usuário deletado com sucesso!');
+          location.reload();
+        } else {
+          window.alert('Usuário não pode ser deletado!');
+        }
+      });
+    }
   }
 }

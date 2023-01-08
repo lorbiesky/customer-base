@@ -15,9 +15,20 @@ import { Customer } from 'src/app/core/models/Customer';
 export class EditCustomerComponent implements OnInit {
   id: string | number;
   title: string;
-  states: State[];
+  states: State[] = [];
 
-  form: FormGroup;
+  form: FormGroup = this.fb.group({
+    name: [null],
+    email: [null],
+    document: [null],
+    birthday: [null],
+    address: [null],
+    city: [null],
+    stateUf: [null],
+    ownHome: [false],
+  });
+
+  customer: Customer;
 
   constructor(
     private customerService: CustomerService,
@@ -28,47 +39,41 @@ export class EditCustomerComponent implements OnInit {
   ) {
     const customerId = this.route.snapshot.paramMap.get('id') || 'new';
 
-    customerId !== 'new'
-      ? (this.title = 'Editar Cliente')
-      : (this.title = 'Novo Cliente');
+    if (customerId !== 'new') {
+      this.title = 'Editar Cliente';
+      this.getCustomer(+customerId);
+    } else {
+      this.title = 'Novo Cliente';
+    }
 
     this.id = customerId;
   }
 
-  ngOnInit() {
-    this.setFormGorup();
+  ngOnInit(): void {
     this.getStates();
   }
 
-  setFormGorup() {
-    let customer: Customer;
-
-    if (this.id !== 'new') {
-      const response = this.customerService.getCustomerById(Number(this.id));
-      if (!response) throw new Error('Customer not found.');
-      customer = response;
-    } else {
-      customer = new Customer();
-    }
-
+  setFormGorup(value: Customer) {
     this.form = this.fb.group({
-      name: [customer.name],
-      email: [customer.email],
-      document: [customer.document],
-      birthday: [customer.birthday, Validators.required],
-      address: [customer.address],
-      city: [customer.city],
-      stateUf: [customer.stateUf],
-      ownHome: customer.ownHome,
+      name: [value.name],
+      email: [value.email],
+      document: [value.document],
+      birthday: [value.birthday, Validators.required],
+      address: [value.address],
+      city: [value.city],
+      stateUf: [value.stateUf],
+      ownHome: value.ownHome,
     });
   }
 
   getStates() {
-    this.localeService.getStates().subscribe({
-      next: (response) => {
-        this.states = response;
-      },
-      error: console.log,
+    this.localeService.getAll().subscribe((value) => (this.states = value));
+  }
+
+  getCustomer(id: number): void {
+    this.customerService.getById(id).subscribe((value) => {
+      const customer = value;
+      this.setFormGorup(customer);
     });
   }
 
@@ -81,11 +86,19 @@ export class EditCustomerComponent implements OnInit {
       const date: string | Moment = customerData.birthday;
 
       customerData.birthday =
-        typeof date == 'string'
-          ? date.split('-').reverse().join('/')
-          : date.format('DD/MM/YYYY');
+        typeof date == 'string' ? customerData.birthday : date.format();
 
       console.log({ customerData });
+
+      this.id === 'new'
+        ? this.customerService.create(customerData).subscribe(() => {
+            window.alert('Cliente cadastrado com sucesso.');
+            this.router.navigate(['/customer']);
+          })
+        : this.customerService.update(+this.id, customerData).subscribe(() => {
+            window.alert('Cliente atualizado com sucesso.');
+            this.router.navigate(['/customer']);
+          });
     }
   }
 
