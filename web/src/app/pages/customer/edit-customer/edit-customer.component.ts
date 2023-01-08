@@ -6,6 +6,9 @@ import { LocaleService } from 'src/app/core/services/locale.service';
 import { Moment } from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from 'src/app/core/models/Customer';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+import { SuccessDialogComponent } from 'src/app/shared/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-edit-customer',
@@ -35,7 +38,8 @@ export class EditCustomerComponent implements OnInit {
     private localeService: LocaleService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) {
     const customerId = this.route.snapshot.paramMap.get('id') || 'new';
 
@@ -67,13 +71,19 @@ export class EditCustomerComponent implements OnInit {
   }
 
   getStates() {
-    this.localeService.getAll().subscribe((value) => (this.states = value));
+    this.localeService.getAll().subscribe({
+      next: (value) => (this.states = value),
+      error: () => this.onError('Erro ao tentar obter Estados.'),
+    });
   }
 
   getCustomer(id: number): void {
-    this.customerService.getById(id).subscribe((value) => {
-      const customer = value;
-      this.setFormGorup(customer);
+    this.customerService.getById(id).subscribe({
+      next: (value) => {
+        const customer = value;
+        this.setFormGorup(customer);
+      },
+      error: () => this.onError('Erro ao tentar obter dados do usuário.'),
     });
   }
 
@@ -88,21 +98,43 @@ export class EditCustomerComponent implements OnInit {
       customerData.birthday =
         typeof date == 'string' ? customerData.birthday : date.format();
 
-      console.log({ customerData });
-
       this.id === 'new'
-        ? this.customerService.create(customerData).subscribe(() => {
-            window.alert('Cliente cadastrado com sucesso.');
-            this.router.navigate(['/customer']);
+        ? this.customerService.create(customerData).subscribe({
+            next: () => {
+              this.onSuccess('Cliente cadastrado com sucesso.');
+            },
+            error: () => this.onError('Erro ao cadastrar cliente.'),
           })
-        : this.customerService.update(+this.id, customerData).subscribe(() => {
-            window.alert('Cliente atualizado com sucesso.');
-            this.router.navigate(['/customer']);
+        : this.customerService.update(+this.id, customerData).subscribe({
+            next: () => {
+              this.onSuccess('Cliente atualizado com sucesso.');
+            },
+            error: () => this.onError('Erro ao atualizar cliente.'),
           });
     }
   }
 
   handleCancel() {
     this.router.navigate(['/customer']);
+  }
+
+  onSuccess(successMsg: string) {
+    const dialogRef = this.dialog.open(SuccessDialogComponent, {
+      data: successMsg,
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(() => this.router.navigate(['/customer']));
+  }
+
+  onError(errorMsg: string) {
+    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg,
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(() => this.router.navigate(['/customer']));
   }
 }
